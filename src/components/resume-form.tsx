@@ -133,7 +133,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
           <CardHeader>
             <CardTitle>Professional Summary</CardTitle>
             <CardDescription>
-              A brief, 2-3 sentence summary of your career. (Optional)
+              A brief, 2-3 sentence summary of your career.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -252,7 +252,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute top-4 right-4 text-destructive hover:text-destructive"
+                    className="absolute top-0 right-1 text-destructive hover:text-destructive"
                     onClick={() => removeExperience(index)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -344,7 +344,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="absolute top-4 right-4 text-destructive hover:text-destructive"
+                    className="absolute top-0 right-1 text-destructive hover:text-destructive"
                     onClick={() => removeEducation(index)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -499,7 +499,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute top-4 right-4 text-destructive hover:text-destructive"
+                  className="absolute top-0 right-1 text-destructive hover:text-destructive"
                   onClick={() => removeCustomSection(index)}
                 >
                   <Trash2 className="h-4 w-4" />

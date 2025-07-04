@@ -26,6 +26,14 @@ export const educationSchema = z.object({
 export const customSectionSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
+  layout: z.enum(["list", "grid"]).default("list"),
+  columns: z
+    .number()
+    .int()
+    .min(1, "Must be at least 1")
+    .max(5, "Cannot exceed 5")
+    .optional(),
+  rows: z.number().int().min(1, "Must be at least 1").optional(),
 });
 
 export const resumeSchema = z.object({

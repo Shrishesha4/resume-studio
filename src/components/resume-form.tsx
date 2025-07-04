@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Card,
   CardContent,
@@ -407,6 +408,85 @@ export function ResumeForm({ form }: ResumeFormProps) {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name={`customSections.${index}.layout`}
+                  render={({ field }) => (
+                    <FormItem className="space-y-2">
+                      <FormLabel>Layout Type</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex gap-4 pt-2"
+                        >
+                          <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                              <RadioGroupItem value="list" id={`list-${index}`} />
+                            </FormControl>
+                            <FormLabel htmlFor={`list-${index}`} className="font-normal cursor-pointer">
+                              Bulleted List
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                              <RadioGroupItem value="grid" id={`grid-${index}`} />
+                            </FormControl>
+                            <FormLabel htmlFor={`grid-${index}`} className="font-normal cursor-pointer">
+                              Grid
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {form.watch(`customSections.${index}.layout`) === "grid" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name={`customSections.${index}.columns`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Columns</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min="1"
+                              max="5"
+                              placeholder="e.g., 3"
+                              {...field}
+                              value={field.value ?? ""}
+                              onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value, 10) : undefined)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`customSections.${index}.rows`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Max Rows</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min="1"
+                              placeholder="e.g., 4"
+                              {...field}
+                              value={field.value ?? ""}
+                              onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value, 10) : undefined)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
                 <Button
                   type="button"
                   variant="ghost"
@@ -425,6 +505,9 @@ export function ResumeForm({ form }: ResumeFormProps) {
                 appendCustomSection({
                   title: "",
                   content: "",
+                  layout: "list",
+                  columns: undefined,
+                  rows: undefined,
                 })
               }
             >
@@ -432,7 +515,6 @@ export function ResumeForm({ form }: ResumeFormProps) {
             </Button>
           </CardContent>
         </Card>
-
       </form>
     </Form>
   );

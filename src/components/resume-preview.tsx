@@ -94,28 +94,41 @@ export function ResumePreview({ data, fontSize }: ResumePreviewProps) {
           {customSections &&
             customSections.length > 0 &&
             customSections.map((section, index) => {
-              if (section.title?.trim().toLowerCase() === "skills") {
-                const skills =
+              if (!section.title && !section.content) return null;
+
+              if (section.layout === "grid" && section.columns && section.columns > 0) {
+                const items =
                   section.content
                     ?.split("\n")
                     .map((s) => s.trim().replace(/^- /, ""))
                     .filter((s) => s) || [];
-                const limitedSkills = skills.slice(0, 12);
+
+                const maxItems =
+                  section.rows && section.rows > 0
+                    ? section.columns * section.rows
+                    : items.length;
+                const limitedItems = items.slice(0, maxItems);
 
                 return (
                   <div key={index}>
                     <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3 [font-size:1.125em]">
                       {section.title}
                     </h2>
-                    <div className="grid grid-cols-3 gap-x-4 gap-y-1 text-foreground/90">
-                      {limitedSkills.map((skill, i) => (
-                        <p key={i}>{skill}</p>
+                    <div
+                      className="grid gap-x-4 gap-y-1 text-foreground/90"
+                      style={{
+                        gridTemplateColumns: `repeat(${section.columns}, minmax(0, 1fr))`,
+                      }}
+                    >
+                      {limitedItems.map((item, i) => (
+                        <p key={i}>{item}</p>
                       ))}
                     </div>
                   </div>
                 );
               }
-              if (!section.title && !section.content) return null;
+              
+              // Default to list view
               return (
                 <div key={index}>
                   <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3 [font-size:1.125em]">

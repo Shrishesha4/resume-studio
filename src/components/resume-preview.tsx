@@ -127,6 +127,19 @@ export function ResumePreview({ data, fontSize }: ResumePreviewProps) {
                   </div>
                 );
               }
+
+              if (section.layout === "paragraph") {
+                return (
+                  <div key={index}>
+                    <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3 [font-size:1.125em]">
+                      {section.title}
+                    </h2>
+                    <p className="text-foreground/90 whitespace-pre-wrap">
+                      {section.content}
+                    </p>
+                  </div>
+                );
+              }
               
               // Default to list view
               return (

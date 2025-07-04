@@ -418,7 +418,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
                         <RadioGroup
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          className="flex gap-4 pt-2"
+                          className="flex flex-wrap gap-4 pt-2"
                         >
                           <FormItem className="flex items-center space-x-2">
                             <FormControl>
@@ -434,6 +434,14 @@ export function ResumeForm({ form }: ResumeFormProps) {
                             </FormControl>
                             <FormLabel htmlFor={`grid-${index}`} className="font-normal cursor-pointer">
                               Grid
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                              <RadioGroupItem value="paragraph" id={`paragraph-${index}`} />
+                            </FormControl>
+                            <FormLabel htmlFor={`paragraph-${index}`} className="font-normal cursor-pointer">
+                              Paragraph
                             </FormLabel>
                           </FormItem>
                         </RadioGroup>

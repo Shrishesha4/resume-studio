@@ -26,7 +26,7 @@ export const educationSchema = z.object({
 export const customSectionSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
-  layout: z.enum(["list", "grid"]).default("list"),
+  layout: z.enum(["list", "grid", "paragraph"]).default("list"),
   columns: z
     .number()
     .int()

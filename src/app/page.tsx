@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { Slider } from "@/components/ui/slider";
 
 const defaultValues: ResumeData = {
   profile: {
@@ -53,6 +54,7 @@ const defaultValues: ResumeData = {
 
 export default function Home() {
   const { toast } = useToast();
+  const [fontSize, setFontSize] = useState(14);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiResult, setAiResult] = useState<{
     suggestions: string;
@@ -98,24 +100,38 @@ export default function Home() {
     <div className="min-h-screen">
       <header className="main-header bg-background shadow-sm sticky top-0 z-40">
         <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex flex-wrap sm:flex-nowrap h-auto sm:h-16 items-center justify-between gap-4 py-2">
             <div className="flex items-center gap-2 font-semibold text-lg">
               <Briefcase className="h-6 w-6 text-primary" />
               <h1>ResumeCraft</h1>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                onClick={handleEnhance}
-                disabled={isAiLoading}
-              >
-                <Wand2 className="mr-2 h-4 w-4" />
-                {isAiLoading ? "Enhancing..." : "Enhance with AI"}
-              </Button>
-              <Button onClick={handlePrint}>
-                <FileDown className="mr-2 h-4 w-4" />
-                Download PDF
-              </Button>
+            <div className="flex items-center gap-x-4 gap-y-2 flex-wrap justify-end w-full sm:w-auto">
+              <div className="flex items-center gap-2">
+                <label htmlFor="font-size-slider" className="text-sm font-medium text-muted-foreground">Font Size</label>
+                <Slider
+                  id="font-size-slider"
+                  defaultValue={[14]}
+                  min={10}
+                  max={20}
+                  step={1}
+                  className="w-24"
+                  onValueChange={(value) => setFontSize(value[0])}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handleEnhance}
+                  disabled={isAiLoading}
+                >
+                  <Wand2 className="mr-2 h-4 w-4" />
+                  {isAiLoading ? "Enhancing..." : "Enhance with AI"}
+                </Button>
+                <Button onClick={handlePrint}>
+                  <FileDown className="mr-2 h-4 w-4" />
+                  Download PDF
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -127,7 +143,7 @@ export default function Home() {
         </div>
         <div className="resume-preview-section mt-8 lg:mt-0">
           <div className="sticky top-20">
-            <ResumePreview data={resumeData} />
+            <ResumePreview data={resumeData} fontSize={fontSize} />
           </div>
         </div>
       </main>

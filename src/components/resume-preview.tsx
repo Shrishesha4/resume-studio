@@ -8,6 +8,7 @@ import { format, parseISO } from 'date-fns';
 
 type ResumePreviewProps = {
   data: ResumeData;
+  fontSize: number;
 };
 
 const formatDate = (dateString?: string) => {
@@ -20,14 +21,14 @@ const formatDate = (dateString?: string) => {
 };
 
 
-export function ResumePreview({ data }: ResumePreviewProps) {
+export function ResumePreview({ data, fontSize }: ResumePreviewProps) {
   const { profile, summary, experience, education } = data;
 
   return (
-    <Card id="resume-preview" className="w-full max-w-[210mm] aspect-[1/1.414] mx-auto overflow-hidden">
-      <CardContent className="p-8 lg:p-12 text-sm">
+    <Card id="resume-preview" className="w-full max-w-[210mm] aspect-[1/1.414] mx-auto overflow-hidden" style={{fontSize: `${fontSize}px`}}>
+      <CardContent className="p-8 lg:p-12 [font-size:0.875em]">
         <div className="flex flex-col items-center text-center mb-6">
-          <h1 className="text-4xl font-bold tracking-tight text-primary">
+          <h1 className="font-bold tracking-tight text-primary [font-size:2.25em]">
             {profile.name || "Your Name"}
           </h1>
           <div className="flex items-center gap-x-4 gap-y-1 text-muted-foreground mt-2 flex-wrap justify-center">
@@ -54,7 +55,7 @@ export function ResumePreview({ data }: ResumePreviewProps) {
 
         <div className="space-y-6">
           <div>
-            <h2 className="text-lg font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-2">
+            <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-2 [font-size:1.125em]">
               Summary
             </h2>
             <p className="text-foreground/90">
@@ -63,19 +64,19 @@ export function ResumePreview({ data }: ResumePreviewProps) {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3">
+            <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3 [font-size:1.125em]">
               Experience
             </h2>
             <div className="space-y-4">
               {experience?.map((exp, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-baseline">
-                    <h3 className="font-semibold text-base">{exp.title || "Job Title"}</h3>
-                    <div className="text-sm text-muted-foreground">
+                    <h3 className="font-semibold [font-size:1em]">{exp.title || "Job Title"}</h3>
+                    <div className="text-muted-foreground [font-size:0.875em]">
                       <span>{formatDate(exp.startDate)}</span> - <span>{formatDate(exp.endDate)}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between items-baseline text-muted-foreground text-sm">
+                  <div className="flex justify-between items-baseline text-muted-foreground [font-size:0.875em]">
                     <p>{exp.company || "Company"}</p>
                     <p>{exp.location || "Location"}</p>
                   </div>
@@ -88,17 +89,17 @@ export function ResumePreview({ data }: ResumePreviewProps) {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3">
+            <h2 className="font-semibold uppercase tracking-wider text-primary border-b-2 border-primary pb-1 mb-3 [font-size:1.125em]">
               Education
             </h2>
             <div className="space-y-3">
               {education?.map((edu, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-baseline">
-                    <h3 className="font-semibold text-base">{edu.degree || "Degree"}</h3>
-                    <p className="text-sm text-muted-foreground">{formatDate(edu.graduationDate)}</p>
+                    <h3 className="font-semibold [font-size:1em]">{edu.degree || "Degree"}</h3>
+                    <p className="text-muted-foreground [font-size:0.875em]">{formatDate(edu.graduationDate)}</p>
                   </div>
-                  <div className="flex justify-between items-baseline text-muted-foreground text-sm">
+                  <div className="flex justify-between items-baseline text-muted-foreground [font-size:0.875em]">
                     <p>{edu.institution || "Institution"}</p>
                     <p>{edu.location || "Location"}</p>
                   </div>

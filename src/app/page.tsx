@@ -50,6 +50,7 @@ const defaultValues: ResumeData = {
       graduationDate: "2019-05-20",
     },
   ],
+  customSections: [],
 };
 
 export default function Home() {

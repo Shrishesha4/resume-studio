@@ -23,11 +23,18 @@ export const educationSchema = z.object({
   graduationDate: z.string().min(1, "Graduation date is required"),
 });
 
+export const customSectionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  content: z.string().min(1, "Content is required"),
+});
+
 export const resumeSchema = z.object({
   profile: profileSchema,
-  summary: z.string().min(1, "Summary is required"),
-  experience: z.array(experienceSchema),
-  education: z.array(educationSchema),
+  summary: z.string().optional(),
+  experience: z.array(experienceSchema).optional(),
+  education: z.array(educationSchema).optional(),
+  customSections: z.array(customSectionSchema).optional(),
 });
 
 export type ResumeData = z.infer<typeof resumeSchema>;
+export type CustomSectionData = z.infer<typeof customSectionSchema>;

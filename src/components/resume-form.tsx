@@ -22,7 +22,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import type { resumeSchema } from "@/lib/types";
 import { PlusCircle, Trash2 } from "lucide-react";
 
@@ -47,6 +46,15 @@ export function ResumeForm({ form }: ResumeFormProps) {
   } = useFieldArray({
     control: form.control,
     name: "education",
+  });
+
+  const {
+    fields: customSectionFields,
+    append: appendCustomSection,
+    remove: removeCustomSection,
+  } = useFieldArray({
+    control: form.control,
+    name: "customSections",
   });
 
   return (
@@ -124,7 +132,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
           <CardHeader>
             <CardTitle>Professional Summary</CardTitle>
             <CardDescription>
-              A brief, 2-3 sentence summary of your career.
+              A brief, 2-3 sentence summary of your career. (Optional)
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -151,7 +159,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
           <CardHeader>
             <CardTitle>Work Experience</CardTitle>
             <CardDescription>
-              Detail your professional history here.
+              Detail your professional history here. (Optional)
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -272,7 +280,7 @@ export function ResumeForm({ form }: ResumeFormProps) {
         <Card>
           <CardHeader>
             <CardTitle>Education</CardTitle>
-            <CardDescription>Your academic background.</CardDescription>
+            <CardDescription>Your academic background. (Optional)</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {educationFields.map((field, index) => (
@@ -358,6 +366,73 @@ export function ResumeForm({ form }: ResumeFormProps) {
             </Button>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Custom Sections</CardTitle>
+            <CardDescription>
+              Add any other sections you want (e.g., Skills, Projects).
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {customSectionFields.map((field, index) => (
+              <div key={field.id} className="p-4 border rounded-lg space-y-4 relative">
+                <FormField
+                  control={form.control}
+                  name={`customSections.${index}.title`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Section Title</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g. Skills" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`customSections.${index}.content`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Content</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          rows={4}
+                          placeholder="- Bullet point 1..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 text-destructive hover:text-destructive"
+                  onClick={() => removeCustomSection(index)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                appendCustomSection({
+                  title: "",
+                  content: "",
+                })
+              }
+            >
+              <PlusCircle className="mr-2 h-4 w-4" /> Add Custom Section
+            </Button>
+          </CardContent>
+        </Card>
+
       </form>
     </Form>
   );

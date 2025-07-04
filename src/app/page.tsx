@@ -9,7 +9,7 @@ import { resumeSchema, type ResumeData } from "@/lib/types";
 import { ResumeForm } from "@/components/resume-form";
 import { ResumePreview } from "@/components/resume-preview";
 import { Button } from "@/components/ui/button";
-import { Wand2, FileDown, Briefcase } from "lucide-react";
+import { Wand2, FileDown, Briefcase, AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
 import { enhanceResumeAction } from "@/lib/actions";
 import {
   Dialog,
@@ -21,6 +21,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Slider } from "@/components/ui/slider";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const defaultValues: ResumeData = {
   profile: {
@@ -56,6 +57,7 @@ const defaultValues: ResumeData = {
 export default function Home() {
   const { toast } = useToast();
   const [fontSize, setFontSize] = useState(14);
+  const [textAlign, setTextAlign] = useState<"left" | "center" | "right" | "justify">("left");
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiResult, setAiResult] = useState<{
     suggestions: string;
@@ -120,6 +122,32 @@ export default function Home() {
                 />
               </div>
               <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-muted-foreground">Alignment</label>
+                <ToggleGroup
+                  type="single"
+                  value={textAlign}
+                  onValueChange={(value) => {
+                    if (value) setTextAlign(value as any);
+                  }}
+                  aria-label="Text alignment"
+                  size="sm"
+                  className="gap-0.5"
+                >
+                  <ToggleGroupItem value="left" aria-label="Left aligned" className="p-1.5 h-auto">
+                    <AlignLeft className="h-4 w-4" />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="center" aria-label="Center aligned" className="p-1.5 h-auto">
+                    <AlignCenter className="h-4 w-4" />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="right" aria-label="Right aligned" className="p-1.5 h-auto">
+                    <AlignRight className="h-4 w-4" />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="justify" aria-label="Justify aligned" className="p-1.5 h-auto">
+                    <AlignJustify className="h-4 w-4" />
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+              <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   onClick={handleEnhance}
@@ -144,7 +172,7 @@ export default function Home() {
         </div>
         <div className="resume-preview-section mt-8 lg:mt-0">
           <div className="sticky top-20">
-            <ResumePreview data={resumeData} fontSize={fontSize} />
+            <ResumePreview data={resumeData} fontSize={fontSize} textAlign={textAlign} />
           </div>
         </div>
       </main>

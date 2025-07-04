@@ -4,10 +4,12 @@ import type { ResumeData } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, Linkedin } from "lucide-react";
 import { format, parseISO } from 'date-fns';
+import { cn } from "@/lib/utils";
 
 type ResumePreviewProps = {
   data: ResumeData;
   fontSize: number;
+  textAlign: "left" | "center" | "right" | "justify";
 };
 
 const formatDate = (dateString?: string) => {
@@ -20,11 +22,18 @@ const formatDate = (dateString?: string) => {
 };
 
 
-export function ResumePreview({ data, fontSize }: ResumePreviewProps) {
+export function ResumePreview({ data, fontSize, textAlign }: ResumePreviewProps) {
   const { profile, summary, experience, education, customSections } = data;
 
   return (
-    <Card id="resume-preview" className="w-full max-w-[210mm] lg:aspect-[1/1.414] mx-auto overflow-y-auto lg:overflow-hidden max-h-[calc(100vh-10rem)] lg:max-h-none" style={{fontSize: `${fontSize}px`}}>
+    <Card 
+      id="resume-preview" 
+      className={cn(
+        "w-full max-w-[210mm] lg:aspect-[1/1.414] mx-auto overflow-y-auto lg:overflow-hidden max-h-[calc(100vh-10rem)] lg:max-h-none",
+        `text-${textAlign}`
+      )} 
+      style={{fontSize: `${fontSize}px`}}
+    >
       <CardContent className="p-8 lg:p-12 [font-size:0.875em]">
         <div className="flex flex-col items-center text-center mb-6">
           <h1 className="font-bold tracking-tight text-primary [font-size:2.25em]">

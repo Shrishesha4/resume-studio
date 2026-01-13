@@ -151,7 +151,7 @@ You can add custom sections with three layout options:
 The application uses a minimalist design with:
 
 - Primary Color: Neutral tones for a professional look
-- Font: Inter (grotesque-style sans-serif)
+- Font: Inter (grotesque sans-serif)
 - Clean sections with clear visual hierarchy
 
 ## 🔒 Environment Variables
